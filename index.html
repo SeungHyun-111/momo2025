@@ -18,32 +18,51 @@
   <link rel="stylesheet" href="https://unpkg.com/swiper@11/swiper-bundle.min.css">
   <script src="https://unpkg.com/swiper@11/swiper-bundle.min.js"></script>
 
-  <!-- 폰트 -->
+  <!-- 폰트(선택) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600&display=swap" rel="stylesheet">
 
   <style>
-    body,html { margin:0; height:100%; font-family:'Noto Sans KR',sans-serif; }
+    html, body { margin:0; height:100%; font-family:'Noto Sans KR', system-ui, -apple-system, Segoe UI, Roboto, sans-serif; }
     #map { width:100%; height:100%; }
 
-    /* 모달 */
+    /* ===== 슬라이드쇼 모달 ===== */
     #slideshow-modal {
-      display:none; position:fixed; inset:0;
-      background:rgba(0,0,0,.7); z-index:9999;
-      display:flex; align-items:center; justify-content:center;
+      display: none;                /* 처음엔 숨김 */
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,.35);  /* 바깥 지도 살짝 비치도록 */
+      z-index: 9999;
+      align-items: center; justify-content: center; /* JS가 display:flex로 켤 때 적용 */
     }
     #slideshow-modal .modal-inner {
-      position:relative; width:90%; height:90%; background:#000; border-radius:12px; overflow:hidden;
+      position: relative;
+      width: 33vw;          /* 너비: 화면의 1/3 */
+      max-width: 720px;     /* 너무 커지지 않도록 상한 */
+      min-width: 420px;     /* 너무 작지 않도록 하한(원하시면 조정) */
+      height: 60vh;         /* 높이: 화면의 60% */
+      background: rgba(0,0,0,.85);  /* 내부도 약간 투명 */
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,.25);
     }
     #close-slideshow {
-      position:absolute; right:12px; top:12px; z-index:10;
-      font-size:18px; background:#fff; border:none; border-radius:6px; padding:6px 10px; cursor:pointer;
+      position: absolute; right: 12px; top: 12px; z-index: 10;
+      font-size: 14px; background:#fff; border:none; border-radius:8px; padding:6px 10px; cursor:pointer;
     }
+
     .swiper { width:100%; height:100%; }
-    .swiper-slide { display:flex; flex-direction:column; justify-content:center; align-items:center; color:#fff; }
+    .swiper-slide {
+      display:flex; flex-direction:column; justify-content:center; align-items:center; color:#fff;
+      width:100%; height:100%;
+    }
     .swiper-slide img { max-width:100%; max-height:80%; object-fit:contain; }
-    .swiper-slide p { margin:8px 0 0; font-size:14px; color:#ddd; }
+    .swiper-slide p { margin:8px 0 0; font-size:13px; color:#ddd; }
+
+    /* 모바일에서 너무 작으면 조금 키우기 */
+    @media (max-width: 768px) {
+      #slideshow-modal .modal-inner { width: 90vw; height: 70vh; min-width: auto; }
+    }
   </style>
 </head>
 <body>
@@ -62,7 +81,7 @@
     </div>
   </div>
 
-  <!-- 데이터(js/photos.js → const photos) -->
+  <!-- 데이터(js/photos.js → const photos = [...] ) -->
   <script src="js/photos.js"></script>
   <!-- 지도 스크립트 -->
   <script src="js/app.js"></script>
