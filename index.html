@@ -3,87 +3,120 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Album — Geographic</title>
-
-  <!-- Leaflet -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
-  <!-- Leaflet.markercluster -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css">
-  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css">
-  <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
-
-  <!-- Swiper -->
-  <link rel="stylesheet" href="https://unpkg.com/swiper@11/swiper-bundle.min.css">
-  <script src="https://unpkg.com/swiper@11/swiper-bundle.min.js"></script>
-
-  <!-- 폰트(선택) -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600&display=swap" rel="stylesheet">
-
+  <title>몽골 여행 앨범 — MOMO</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;800&display=swap" rel="stylesheet">
   <style>
-    html, body { margin:0; height:100%; font-family:'Noto Sans KR', system-ui, -apple-system, Segoe UI, Roboto, sans-serif; }
-    #map { width:100%; height:100%; }
+    body { margin:0; font-family:'Noto Sans KR',sans-serif; background:#fafafa; color:#222; }
 
-    /* ===== 슬라이드쇼 모달 ===== */
-    #slideshow-modal {
-      display: none;                /* 처음엔 숨김 */
-      position: fixed; inset: 0;
-      background: rgba(0,0,0,.35);  /* 바깥 지도 살짝 비치도록 */
-      z-index: 9999;
-      align-items: center; justify-content: center; /* JS가 display:flex로 켤 때 적용 */
-    }
-    #slideshow-modal .modal-inner {
-      position: relative;
-      width: 33vw;          /* 너비: 화면의 1/3 */
-      max-width: 720px;     /* 너무 커지지 않도록 상한 */
-      min-width: 420px;     /* 너무 작지 않도록 하한(원하시면 조정) */
-      height: 60vh;         /* 높이: 화면의 60% */
-      background: rgba(0,0,0,.85);  /* 내부도 약간 투명 */
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 10px 30px rgba(0,0,0,.25);
-    }
-    #close-slideshow {
-      position: absolute; right: 12px; top: 12px; z-index: 10;
-      font-size: 14px; background:#fff; border:none; border-radius:8px; padding:6px 10px; cursor:pointer;
+    /* 헤더 */
+    header { background:#fff; border-bottom:1px solid #e5e5e5; padding:20px; text-align:center; position:sticky; top:0; z-index:100; }
+    header .brand { font-weight:800; font-size:24px; color:#1e3932; }
+
+    /* 상단 배너 */
+    .map-banner { background:#1e3932; color:#fff; padding:28px 20px; text-align:center; margin:0; }
+    .map-banner h2 { margin:0 0 12px; font-size:20px; font-weight:700; }
+    .map-banner a { display:inline-block; background:#fff; color:#1e3932; font-weight:700; font-size:15px; padding:10px 20px; border-radius:20px; text-decoration:none; transition:.25s; }
+    .map-banner a:hover { background:#f1f1f1; }
+
+    /* 섹션 카드 */
+    main { max-width:1200px; margin:0 auto; padding:32px 16px; }
+    .section { display:flex; flex-wrap:wrap; align-items:center; margin-bottom:48px; background:#fff; border-radius:12px; overflow:hidden; box-shadow:0 4px 12px rgba(0,0,0,.05); }
+        /* 공통 */
+    .section img {
+      width:50%;
+      height:280px;
+      object-fit: cover;
+      object-position: center;
     }
 
-    .swiper { width:100%; height:100%; }
-    .swiper-slide {
-      display:flex; flex-direction:column; justify-content:center; align-items:center; color:#fff;
-      width:100%; height:100%;
+    /* 낙타 전용: 반드시 공통 뒤에 작성 */
+    .section img.camel-img {
+      object-position: center 70%; /* 세로를 약간 위쪽으로 당김 */
     }
-    .swiper-slide img { max-width:100%; max-height:80%; object-fit:contain; }
-    .swiper-slide p { margin:8px 0 0; font-size:13px; color:#ddd; }
+    .section .text { flex:1; padding:24px; min-width:250px; }
+    .section .text h2 { margin:0 0 12px; font-size:22px; color:#2c3e50; }
+    .section .text p { margin:0 0 16px; color:#555; line-height:1.6; }
+    .section .text a { display:inline-block; padding:10px 18px; background:#1e3932; color:#fff; border-radius:20px; font-size:14px; font-weight:600; text-decoration:none; }
+    .section .text a:hover { background:#145a32; }
 
-    /* 모바일에서 너무 작으면 조금 키우기 */
-    @media (max-width: 768px) {
-      #slideshow-modal .modal-inner { width: 90vw; height: 70vh; min-width: auto; }
+    /* 푸터 */
+    footer { text-align:center; font-size:13px; color:#777; padding:24px 16px; background:#f8f8f8; border-top:1px solid #e0e0e0; }
+
+    /* 모바일 */
+    @media(max-width:768px){
+      .section{flex-direction:column;}
+      .section img{width:100%; height:200px;}
     }
+
   </style>
 </head>
 <body>
-  <div id="map"></div>
+  <!-- 헤더 -->
+  <header>
+    <div class="brand">몽골 여행 앨범</div>
+  </header>
 
-  <!-- 슬라이드쇼 모달 -->
-  <div id="slideshow-modal">
-    <div class="modal-inner">
-      <button id="close-slideshow">닫기</button>
-      <div class="swiper">
-        <div class="swiper-wrapper"></div>
-        <div class="swiper-button-prev"></div>
-        <div class="swiper-button-next"></div>
-        <div class="swiper-pagination"></div>
-      </div>
-    </div>
+  <!-- 한눈에 보기 배너 (지도로 보기) -->
+  <div class="map-banner">
+    <h2>한눈에 보기</h2>
+    <a href="map.html">지도로 보기</a>
   </div>
 
-  <!-- 데이터(js/photos.js → const photos = [...] ) -->
-  <script src="js/photos.js"></script>
-  <!-- 지도 스크립트 -->
-  <script src="js/app.js"></script>
+  <main>
+    <!-- 밤하늘 -->
+    <div class="section">
+      <img src="image/converted/GPS_223.JPG" alt="밤하늘">
+      <div class="text">
+        <h2>밤하늘</h2>
+        <p>사막 한가운데서 올려다본 몽골의 별 가득한 하늘.</p>
+        <a href="night.html">보러가기</a>
+      </div>
+    </div>
+
+    <!-- 울란바토르 -->
+    <div class="section">
+      <img src="image/converted/GPS_170.JPG" alt="울란바토르">
+      <div class="text">
+        <h2>울란바토르</h2>
+        <p>몽골의 수도에서의 추억들. 도시 풍경과 가족의 일상 기록.</p>
+        <a href="ulanbator.html">보러가기</a>
+      </div>
+    </div>
+
+    <!-- 낙타 -->
+    <div class="section">
+      <img src="image/converted/GPS_270.JPG" alt="낙타" class="camel-img">
+      <div class="text">
+        <h2>낙타</h2>
+        <p>끝없는 사막 위에서 만난 낙타와 함께한 순간들.</p>
+        <a href="camel.html">보러가기</a>
+      </div>
+    </div>
+
+    <!-- 말 -->
+    <div class="section">
+      <img src="image/converted/GPS_234.JPG" alt="말">
+      <div class="text">
+        <h2>말</h2>
+        <p>광활한 초원에서 달리던 말들과의 기억.</p>
+        <a href="horse.html">보러가기</a>
+      </div>
+    </div>
+
+    <!-- 테를지 -->
+    <div class="section">
+      <img src="image/converted/GPS_273.JPG" alt="테를지">
+      <div class="text">
+        <h2>테를지</h2>
+        <p>자연이 살아 숨 쉬는 테를지 국립공원에서의 여유.</p>
+        <a href="terelj.html">보러가기</a>
+      </div>
+    </div>
+  </main>
+
+  <!-- 푸터 -->
+  <footer>
+    © 2025 MOMO Album. All rights reserved. Designed & Powered by momo25 Project.
+  </footer>
 </body>
 </html>
