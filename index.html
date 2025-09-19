@@ -12,6 +12,45 @@
     header { background:#fff; border-bottom:1px solid #e5e5e5; padding:20px; text-align:center; position:sticky; top:0; z-index:100; }
     header .brand { font-weight:800; font-size:24px; color:#1e3932; }
 
+    /* Hero Video */
+    .hero-video {
+      position:relative;
+      width:100%;
+      height:100%; /* 필요시 높이 조정 */
+      overflow:hidden;
+    }
+    .hero-video video {
+      width:100%; height:100%;
+      object-fit:cover;
+    }
+    .hero-video .overlay {
+      position:absolute; inset:0;
+      display:flex; flex-direction:column;
+      align-items:center; justify-content:center;
+      color:#fff; text-align:center;
+      background:rgba(0,0,0,0.25);
+      padding:20px;
+    }
+    .hero-video .overlay h1 {
+      font-size:32px; font-weight:800; margin:0 0 12px;
+    }
+    .hero-video .overlay p {
+      font-size:16px; margin:0 0 20px;
+    }
+    .hero-video .overlay .actions {
+      display:flex; gap:12px;
+    }
+    .hero-video .overlay .btn {
+      padding:10px 18px; border-radius:20px;
+      background:#1e3932; color:#fff; text-decoration:none; font-weight:600;
+    }
+    .hero-video .overlay .btn.outline {
+      background:transparent; border:2px solid #fff; color:#fff;
+    }
+    .hero-video .overlay .btn:hover {
+      background:#145a32;
+    }
+
     /* 상단 배너 */
     .map-banner { background:#1e3932; color:#fff; padding:28px 20px; text-align:center; margin:0; }
     .map-banner h2 { margin:0 0 12px; font-size:20px; font-weight:700; }
@@ -21,18 +60,18 @@
     /* 섹션 카드 */
     main { max-width:1200px; margin:0 auto; padding:32px 16px; }
     .section { display:flex; flex-wrap:wrap; align-items:center; margin-bottom:48px; background:#fff; border-radius:12px; overflow:hidden; box-shadow:0 4px 12px rgba(0,0,0,.05); }
-        /* 공통 */
+
+    /* 공통 이미지 규칙 */
     .section img {
       width:50%;
       height:280px;
-      object-fit: cover;
-      object-position: center;
+      object-fit:cover;
+      object-position:center;
+      display:block;
     }
+    /* 낙타 전용 */
+    .section img.camel-img { object-position: center 70%; }
 
-    /* 낙타 전용: 반드시 공통 뒤에 작성 */
-    .section img.camel-img {
-      object-position: center 70%; /* 세로를 약간 위쪽으로 당김 */
-    }
     .section .text { flex:1; padding:24px; min-width:250px; }
     .section .text h2 { margin:0 0 12px; font-size:22px; color:#2c3e50; }
     .section .text p { margin:0 0 16px; color:#555; line-height:1.6; }
@@ -43,11 +82,13 @@
     footer { text-align:center; font-size:13px; color:#777; padding:24px 16px; background:#f8f8f8; border-top:1px solid #e0e0e0; }
 
     /* 모바일 */
-    @media(max-width:768px){
+    @media (max-width:768px){
       .section{flex-direction:column;}
       .section img{width:100%; height:200px;}
+      .hero-video{height:280px;}
+      .hero-video .overlay h1{font-size:22px;}
+      .hero-video .overlay p{font-size:13px;}
     }
-
   </style>
 </head>
 <body>
@@ -56,60 +97,143 @@
     <div class="brand">몽골 여행 앨범</div>
   </header>
 
-  <!-- 한눈에 보기 배너 (지도로 보기) -->
+  <!-- ✨ 영상 배너 -->
+  <section class="hero-video">
+    <video src="video/mongolia.MOV" autoplay muted loop playsinline></video>
+    <div class="overlay">
+      <h1>엄마랑 떠난 몽골여행</h1>
+      <p>광활한 초원과 별빛 가득한 하늘, 그 모든 순간을 기록하다</p>
+      <div class="actions">
+        <a href="viewer.html?group=night-sky" class="btn">별빛 보기</a>
+        <a href="map.html" class="btn outline">지도 보기</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 한눈에 보기 배너 -->
   <div class="map-banner">
     <h2>한눈에 보기</h2>
     <a href="map.html">지도로 보기</a>
   </div>
 
   <main>
-    <!-- 밤하늘 -->
+    <!-- 1. 밤하늘 -->
     <div class="section">
       <img src="image/converted/GPS_223.JPG" alt="밤하늘">
       <div class="text">
         <h2>밤하늘</h2>
         <p>사막 한가운데서 올려다본 몽골의 별 가득한 하늘.</p>
-        <a href="night.html">보러가기</a>
+        <a href="viewer.html?group=night-sky">보러가기</a>
       </div>
     </div>
 
-    <!-- 울란바토르 -->
+    <!-- 2. 테를지국립공원 -->
     <div class="section">
-      <img src="image/converted/GPS_170.JPG" alt="울란바토르">
+      <img src="image/converted/GPS_273.JPG" alt="테를지국립공원">
       <div class="text">
-        <h2>울란바토르</h2>
-        <p>몽골의 수도에서의 추억들. 도시 풍경과 가족의 일상 기록.</p>
-        <a href="ulanbator.html">보러가기</a>
+        <h2>테를지국립공원</h2>
+        <p>자연이 살아 숨 쉬는 테를지 국립공원에서의 여유.</p>
+        <a href="viewer.html?group=terelj">보러가기</a>
       </div>
     </div>
 
-    <!-- 낙타 -->
-    <div class="section">
-      <img src="image/converted/GPS_270.JPG" alt="낙타" class="camel-img">
-      <div class="text">
-        <h2>낙타</h2>
-        <p>끝없는 사막 위에서 만난 낙타와 함께한 순간들.</p>
-        <a href="camel.html">보러가기</a>
-      </div>
-    </div>
-
-    <!-- 말 -->
+    <!-- 3. 말 -->
     <div class="section">
       <img src="image/converted/GPS_234.JPG" alt="말">
       <div class="text">
         <h2>말</h2>
         <p>광활한 초원에서 달리던 말들과의 기억.</p>
-        <a href="horse.html">보러가기</a>
+        <a href="viewer.html?group=horse">보러가기</a>
       </div>
     </div>
 
-    <!-- 테를지 -->
+    <!-- 4. 칭기스칸박물관 -->
     <div class="section">
-      <img src="image/converted/GPS_273.JPG" alt="테를지">
+      <img src="image/converted/GPS_6.JPG" alt="칭기스칸박물관">
       <div class="text">
-        <h2>테를지</h2>
-        <p>자연이 살아 숨 쉬는 테를지 국립공원에서의 여유.</p>
-        <a href="terelj.html">보러가기</a>
+        <h2>칭기스칸박물관</h2>
+        <p>몽골의 역사와 문화를 한눈에 볼 수 있는 공간.</p>
+        <a href="viewer.html?group=chinggis-museum">보러가기</a>
+      </div>
+    </div>
+
+    <!-- 5. 마상쇼 -->
+    <div class="section">
+      <img src="image/converted/GPS_10.JPG" alt="마상쇼">
+      <div class="text">
+        <h2>마상쇼</h2>
+        <p>전통 기마 공연에서 느낀 역동성과 현장의 열기.</p>
+        <a href="viewer.html?group=horse-show">보러가기</a>
+      </div>
+    </div>
+
+    <!-- 6. 엘살타하르사원 -->
+    <div class="section">
+      <img src="image/converted/GPS_321.JPG" alt="엘살타하르사원">
+      <div class="text">
+        <h2>엘살타하르사원</h2>
+        <p>고즈넉한 사원에서 마주한 특별한 순간.</p>
+        <a href="viewer.html?group=elshaltaat-temple">보러가기</a>
+      </div>
+    </div>
+
+    <!-- 7. 푸르공 -->
+    <div class="section">
+      <img src="image/converted/GPS_25.JPG" alt="푸르공">
+      <div class="text">
+        <h2>푸르공</h2>
+        <p>광야를 달린 러시아 밴, 푸르공과의 여정.</p>
+        <a href="viewer.html?group=furgon">보러가기</a>
+      </div>
+    </div>
+
+    <!-- 8. 미니사막 -->
+    <div class="section">
+      <img src="image/converted/GPS_46.JPG" alt="미니사막">
+      <div class="text">
+        <h2>미니사막</h2>
+        <p>작지만 인상적인 사구와 해질녘 풍경.</p>
+        <a href="viewer.html?group=mini-desert">보러가기</a>
+      </div>
+    </div>
+
+    <!-- 9. 낙타 -->
+    <div class="section">
+      <img src="image/converted/GPS_270.JPG" alt="낙타" class="camel-img">
+      <div class="text">
+        <h2>낙타</h2>
+        <p>끝없는 사막 위에서 만난 낙타와 함께한 순간들.</p>
+        <a href="viewer.html?group=camel">보러가기</a>
+      </div>
+    </div>
+
+    <!-- 10. 카라코룸 -->
+    <div class="section">
+      <img src="image/converted/GPS_75.JPG" alt="카라코룸">
+      <div class="text">
+        <h2>카라코룸</h2>
+        <p>오랜 수도의 흔적을 따라 걸은 하루.</p>
+        <a href="viewer.html?group=karakorum">보러가기</a>
+      </div>
+    </div>
+
+    <!-- 11. 울란바토르 -->
+    <div class="section">
+      <img src="image/converted/GPS_170.JPG" alt="울란바토르">
+      <div class="text">
+        <h2>울란바토르</h2>
+        <p>몽골의 수도에서의 추억들. 도시 풍경과 가족의 일상 기록.</p>
+        <a href="viewer.html?group=ulaanbaatar">보러가기</a>
+      </div>
+    </div>
+
+    <!-- 12. 공항 -->
+    <div class="section">
+      <img src="image/converted/GPS_205.JPG" alt="공항">
+      <div class="text">
+        <h2>공항</h2>
+        <p>여정의 시작과 끝, 공항에서의 기록.</p>
+        <a href="viewer.html?group=airport">보러가기</a>
       </div>
     </div>
   </main>
