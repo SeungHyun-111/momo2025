@@ -46,11 +46,11 @@
 
     /* 본문 레이아웃: 좌측 지도 / 우측 사진 목록 */
     .wrap {
-      height: calc(100vh - 60px); /* 헤더 높이 제외 */
-      display:flex; gap:0; /* 경계 붙이기 */
+      height: calc(100vh - 60px);
+      display:flex; gap:0;
     }
     #map {
-      flex: 1 1 auto;   /* 왼쪽: 유연하게 */
+      flex: 1 1 auto;
       width: 70%;
       height: 100%;
     }
@@ -96,6 +96,19 @@
     .swiper-slide { display:flex; flex-direction:column; justify-content:center; align-items:center; color:#fff; }
     .swiper-slide img { max-width:100%; max-height:80%; object-fit:contain; }
     .swiper-slide p { margin:8px 0 0; font-size:13px; color:#ddd; }
+
+    /* ✅ Swiper 버튼 가시성 보강 */
+    .swiper-button-next,
+    .swiper-button-prev {
+      color:#fff;         /* 흰색 버튼 */
+      opacity:1;          /* 항상 보이게 */
+      z-index:20;         /* 최상단 */
+    }
+    .swiper-button-next::after,
+    .swiper-button-prev::after {
+      font-size:24px;     /* 크기 확대 */
+      font-weight:bold;
+    }
 
     @media (max-width: 1024px) {
       #map { width: 60%; }
